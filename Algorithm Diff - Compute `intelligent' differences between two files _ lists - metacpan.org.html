@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Algorithm::Diff - Compute `intelligent' differences between two files / lists - metacpan.org</title>
+        <link rel="preload" as="fetch" href="https://metacpan.org/account/login_status" crossorigin="anonymous">
+        <link href="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/233fc73434db8b4c8d73b93ae6bbaec9f04bb4a9.css" rel="stylesheet" type="text/css">
+        <script async="" src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/analytics.js"></script><script src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/7e2ec548c7aa7123633979a9ab0cd1ed80a41eae.js" type="text/javascript" defer="defer"></script>
+        <link rel="alternate" type="application/rss+xml" title="Recent CPAN Uploads of Algorithm-Diff - MetaCPAN" href="https://metacpan.org/dist/Algorithm-Diff/releases.rss">
+        <link rel="canonical" href="https://metacpan.org/pod/Algorithm::Diff">
+        <meta name="description" content="Compute `intelligent' differences between two files / lists">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+        <link rel="shortcut icon" href="https://metacpan.org/static/icons/favicon.ico">
+        <link rel="apple-touch-icon" sizes="152x152" href="https://metacpan.org/static/icons/apple-touch-icon.png">
+        <link rel="search" href="https://metacpan.org/static/opensearch.xml" type="application/opensearchdescription+xml" title="MetaCPAN">
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          (function(skey, ga_id){
+            ga('create', ga_id, {
+              siteSpeedSampleRate : 100,
+              storage             : 'none',
+              clientId            : localStorage.getItem(skey)
+            });
+            ga(function(tracker) {
+              localStorage.setItem(skey, tracker.get('clientId'));
+            });
+            ga('send', 'pageview');
+          })('ga:clientId', 'UA-27829474-1');
+        </script>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://metacpan.org/pod/Algorithm::Diff">
+<meta name="twitter:title" content="Algorithm::Diff">
+<meta name="twitter:description" content="Compute `intelligent' differences between two files / lists">
+<meta name="twitter:site" content="metacpan">
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="header-logo-large hidden-xs">
+              <a href="https://metacpan.org/" tabindex="0">
+                <svg class="logo" aria-label="MetaCPAN">
+                  <use class="logo" href="/static/images/metacpan-logo.svg#logo"></use>
+                </svg>
+              </a>
+            </div>
+            <div class="header-logo-icon visible-xs">
+              <a href="https://metacpan.org/">
+                <svg class="logo" aria-label="MetaCPAN">
+                  <use class="logo" href="/static/images/metacpan-logo.svg#dots"></use>
+                </svg>
+              </a>
+            </div>
+            <ul class="nav navbar-nav menu-items hidden-xs hidden-sm">
+              <li><a href="https://metacpan.org/about">About</a></li>
+              <li><a href="https://metacpan.org/about/sponsors">Sponsor</a></li>
+              <li><a href="https://grep.metacpan.org/">grep::cpan</a></li>
+              <li><a href="https://metacpan.org/recent">Recent</a></li>
+              <li><a href="https://metacpan.org/about/faq">FAQ</a></li>
+              <li><a href="https://metacpan.org/tools">Tools</a></li>
+              <li><a href="https://fastapi.metacpan.org/">API</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <button type="button" class="searchbar-btn visible-xs visible-sm">
+                    <i class="fa fa-search button-fa-icon"></i>
+                </button>
+                <form action="/search" class="searchbar-form visible-md visible-lg search-form form-horizontal">
+                   <input type="hidden" name="size" id="metacpan_search-size" value="20">
+                  <div class="form-group">
+                      <div class="search-group">
+                        <i class="fa fa-search"></i>
+                        <input type="text" name="q" placeholder="Search the CPAN" size="41" autocorrect="off" autocapitalize="none" spellcheck="false" id="metacpan_search-input" class="form-control" autocomplete="off">
+                      </div>
+                  </div>
+                </form>
+                    <li class="icon-slidepanel visible-xs visible-sm">
+                      <button data-toggle="slidepanel" data-target=".slidepanel">
+                        <i class="fa fa-bars button-fa-icon"></i>
+                      </button>
+                    </li>
+                <form action="/account/logout" method="POST" id="metacpan-logout"></form>
+                <li class="dropdown logged_in" style="display: none;">
+                    <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-user button-fa-icon logged-in-icon" aria-hidden="true"></i>
+                      <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://metacpan.org/account/identities">Identities</a></li>
+                        <li><a href="https://metacpan.org/account/profile">Profile</a></li>
+                        <li><a href="https://metacpan.org/account/favorite/list">Favorites</a></li>
+                        <li>
+                            <a href="#" type="button" onclick="$('#metacpan-logout').submit(); return false">
+                              Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown logged_out" style="display: inline;">
+                    <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-user button-fa-icon" aria-hidden="true"></i>
+                      <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="https://metacpan.org/login/github">
+                                <i class="fab fa-github fa-fw"></i>
+                                GitHub
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://metacpan.org/login/twitter">
+                                <i class="fab fa-twitter fa-fw"></i>
+                                Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://metacpan.org/login/google">
+                                <i class="fab fa-google fa-fw"></i>
+                                Google
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown logged_placeholder" style="display: none;">
+                    <button>
+                      <i class="fa fa-user button-fa-icon" aria-hidden="true"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        <div class="page-content ">
+          <!--
+          <div class="top-notify-banner">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          -->
+          <nav class="sidebar">
+            <div class="slidepanel">
+              <ul class="nav-list ">
+    <li class="nav-header no-margin-top">
+      <div class="ttip" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="The date that this version of Algorithm-Diff was released.">
+      <span class="relatize" title="13 Dec 2020 22:34:02 UTC">Dec 13, 2020</span>
+    </div></li>
+  <li>
+    Distribution: <a href="https://metacpan.org/dist/Algorithm-Diff">Algorithm-Diff</a>
+  </li>
+  <li>
+    Module version: 1.201
+  </li>
+  <li>
+    <a data-keyboard-shortcut="g s" href="https://metacpan.org/dist/Algorithm-Diff/source/lib/Algorithm/Diff.pm">Source</a>
+    (<a href="https://metacpan.org/dist/Algorithm-Diff/source/lib/Algorithm/Diff.pm?raw=1">raw</a>)
+  </li>
+  <li>
+    <a data-keyboard-shortcut="g b" href="https://metacpan.org/dist/Algorithm-Diff/source/lib/Algorithm">Browse</a>
+    (<a href="https://metacpan.org/dist/Algorithm-Diff/source/lib/Algorithm?raw=1">raw</a>)
+  </li>
+    <li>
+      <a data-keyboard-shortcut="g c" href="https://metacpan.org/dist/Algorithm-Diff/changes">Changes</a>
+    </li>
+    <li>
+      <a class="nopopup" href="https://metacpan.org/dist/Algorithm-Diff/contribute">How to Contribute</a>
+    </li>
+    <li>
+      <a rel="noopener nofollow" data-keyboard-shortcut="g i" href="https://rt.cpan.org/Public/Dist/Display.html?Name=Algorithm-Diff">Issues</a>
+      (7)
+    </li>
+    <li>
+      <a rel="noopener nofollow" href="http://matrix.cpantesters.org/?dist=Algorithm-Diff+1.201" title="Matrix">Testers</a>
+        <span title="(pass / fail / na)">(<a rel="noopener nofollow" href="https://www.cpantesters.org/distro/A/Algorithm-Diff.html?oncpan=1&amp;distmat=1&amp;version=1.201&amp;grade=2" style="color: #090">499</a> / <a rel="noopener nofollow" href="https://www.cpantesters.org/distro/A/Algorithm-Diff.html?oncpan=1&amp;distmat=1&amp;version=1.201&amp;grade=3" style="color: #900">0</a> / <a rel="noopener nofollow" href="https://www.cpantesters.org/distro/A/Algorithm-Diff.html?oncpan=1&amp;distmat=1&amp;version=1.201&amp;grade=4">0</a>)</span>
+    </li>
+    <li>
+      <a rel="noopener nofollow" href="http://cpants.cpanauthors.org/release/RJBS/Algorithm-Diff-1.201">Kwalitee</a>
+    </li>
+    <li>
+      <div class="ttip" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="The # people with an indexing permission on Algorithm-Diff who have released something to CPAN in the last 2 years (i.e. the # people likely able to release critical fixes in a timely manner)">
+      Bus factor: 1
+      </div>
+    </li>
+    <li>
+      <a rel="noopener nofollow" href="http://cpancover.com/latest/Algorithm-Diff-1.201/index.html">84.14% Coverage </a>
+    </li>
+    <li>
+      License: unknown
+    </li>
+    <li class="nav-header">Activity</li>
+    <li>
+<div class="activity-graph">
+    <img src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/activity.svg">
+    <div class="comment">24 month</div>
+</div>
+    </li>
+    <li class="nav-header">Tools</li>
+    <li>
+      <a itemprop="downloadUrl" href="https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Algorithm-Diff-1.201.tar.gz">
+      Download (<span itemprop="fileSize">29.34KB</span>)</a>
+    </li>
+    <li>
+      <a href="https://explorer.metacpan.org/?url=%2Fmodule%2FRJBS%2FAlgorithm-Diff-1.201%2Flib%2FAlgorithm%2FDiff.pm">
+        MetaCPAN Explorer
+      </a>
+    </li>
+    <li>
+      <a href="https://metacpan.org/dist/Algorithm-Diff/permissions">
+        Permissions
+      </a>
+    </li>
+    <li>
+      <a href="https://metacpan.org/dist/Algorithm-Diff/releases.rss">
+        Subscribe to distribution
+      </a>
+    </li>
+    <li>
+      <button class="btn btn-link" data-toggle="modal" data-target="#metacpan_install-instructions-dialog">
+        Install Instructions
+      </button>
+    </li>
+    <li>
+      <form action="/search">
+        <input type="hidden" name="q" value="dist:Algorithm-Diff">
+        <input type="search" name="q" placeholder="Search distribution" class="form-control tool-bar-form">
+        <input type="submit" style="display: none">
+      </form>
+    </li>
+    <li>
+      <form action="https://grep.metacpan.org/search">
+        <input type="hidden" name="qd" value="Algorithm-Diff">
+        <input type="hidden" name="source" value="metacpan">
+        <input type="search" name="q" placeholder="grep distribution" class="form-control tool-bar-form">
+        <input type="submit" style="display: none">
+     </form>
+    </li>
+    <li class="version-jump">
+<select onchange="document.location.href='/release/'+this.value+'/view/lib/Algorithm/Diff.pm'" class="form-control tool-bar-form">
+  <option disabled="disabled" selected="selected">Jump to version</option>
+<option disabled="disabled" value="RJBS/Algorithm-Diff-1.201">1.201
+  (RJBS on 2020-12-13)</option>
+<option value="RJBS/Algorithm-Diff-1.200">1.200
+  (RJBS on 2020-09-27)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1903">1.1903
+  (TYEMQ on 2014-11-26)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1902">1.1902
+  (TYEMQ on 2006-07-31)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1901">1.1901
+  (TYEMQ on 2004-09-25)</option>
+<optgroup label="BackPAN">'
+<option value="ARISTOTLE/Algorithm-Diff-1.1903">1.1903
+  (ARISTOTLE on 2018-02-25)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.15">1.15
+  (NEDKONZ on 2002-04-30)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.11a">1.11a
+  (NEDKONZ on 2001-07-13)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.11">1.11
+  (NEDKONZ on 2001-07-12)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.10">1.10
+  (NEDKONZ on 2000-07-07)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.06">1.06
+  (NEDKONZ on 2000-06-14)</option>
+<option value="MJD/Algorithm-Diff-0.59">0.59
+  (MJD on 1999-03-10)</option>
+<option value="MJD/Algorithm-Diff-0.58">0.58
+  (MJD on 1999-03-08)</option>
+<option value="MJD/Algorithm-Diff-0.56">0.56
+  (MJD on 1999-03-04)</option>
+<option value="MJD/Algorithm-Diff-0.57">0.57
+  (MJD on 1999-03-04)</option>
+<option value="MJD/Algorithm-Diff-0.55">0.55
+  (MJD on 1999-02-27)</option>
+</optgroup>
+</select>
+    </li>
+    <li class="version-diff">
+<select onchange="document.location.href='/release/RJBS/Algorithm-Diff-1.201/diff/' + encodeURIComponent(this.value) + '/lib/Algorithm/Diff.pm'
+" class="form-control tool-bar-form">
+  <option disabled="disabled" selected="selected">Diff with version</option>
+<option disabled="disabled" value="RJBS/Algorithm-Diff-1.201">1.201
+  (RJBS on 2020-12-13)</option>
+<option value="RJBS/Algorithm-Diff-1.200">1.200
+  (RJBS on 2020-09-27)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1903">1.1903
+  (TYEMQ on 2014-11-26)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1902">1.1902
+  (TYEMQ on 2006-07-31)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1901">1.1901
+  (TYEMQ on 2004-09-25)</option>
+<optgroup label="BackPAN">'
+<option value="ARISTOTLE/Algorithm-Diff-1.1903">1.1903
+  (ARISTOTLE on 2018-02-25)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.15">1.15
+  (NEDKONZ on 2002-04-30)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.11a">1.11a
+  (NEDKONZ on 2001-07-13)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.11">1.11
+  (NEDKONZ on 2001-07-12)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.10">1.10
+  (NEDKONZ on 2000-07-07)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.06">1.06
+  (NEDKONZ on 2000-06-14)</option>
+<option value="MJD/Algorithm-Diff-0.59">0.59
+  (MJD on 1999-03-10)</option>
+<option value="MJD/Algorithm-Diff-0.58">0.58
+  (MJD on 1999-03-08)</option>
+<option value="MJD/Algorithm-Diff-0.56">0.56
+  (MJD on 1999-03-04)</option>
+<option value="MJD/Algorithm-Diff-0.57">0.57
+  (MJD on 1999-03-04)</option>
+<option value="MJD/Algorithm-Diff-0.55">0.55
+  (MJD on 1999-02-27)</option>
+</optgroup>
+</select>
+    </li>
+
+    <li>
+<ul class="dependencies">
+  <li class="nav-header">Dependencies</li>
+  <li><i class="ttip" title="" data-original-title="dynamic_config enabled">unknown</i></li>
+  <li>
+    <hr>
+  </li>
+  <li>
+    <a href="https://metacpan.org/module/Algorithm::Diff/requires">Reverse dependencies</a>
+  </li>
+  <li>
+    <a href="http://deps.cpantesters.org/?module=Algorithm%3A%3ADiff">CPAN Testers List</a>
+  </li>
+  <li>
+    <a href="https://cpandeps.grinnz.com/?dist=Algorithm-Diff">Dependency graph</a>
+  </li>
+</ul>
+    </li>
+    <li class="nav-header">Permalinks</li>
+    <li>
+      <a href="https://metacpan.org/release/RJBS/Algorithm-Diff-1.201/view/lib/Algorithm/Diff.pm">This version</a>
+    </li>
+    <li>
+      <a href="https://metacpan.org/pod/Algorithm::Diff">Latest version</a>
+    </li>
+    <li>
+<div class="plussers">
+<div class="nav-header">++ed by:</div>
+<div>
+<a class="display-all" href="https://metacpan.org/author/POTATOGIM"><img src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/82f1c6258702415af6e26187f1e36850.jpg" title="POTATOGIM" alt="POTATOGIM"></a>
+<a class="display-all" href="https://metacpan.org/author/SYP"><img src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/9b6fa62677be03c25ee1af4d95472042.png" title="SYP" alt="SYP"></a>
+<a class="display-all" href="https://metacpan.org/author/MIXAS"><img src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/57024569984e31ce52a855c7305be66e.png" title="MIXAS" alt="MIXAS"></a>
+<a class="display-all" href="https://metacpan.org/author/KRAUTCAT"><img src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/efd137d1577aa9df7fc833f6306958d5.png" title="KRAUTCAT" alt="KRAUTCAT"></a>
+<a class="display-all" href="https://metacpan.org/author/KHS"><img src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/0e07a4f7ec395adf25cce52959fd0eff.png" title="KHS" alt="KHS"></a>
+</div>
+<!-- Display counts of plussers-->
+<div>
+    <a href="https://metacpan.org/dist/Algorithm-Diff/plussers">16 PAUSE users</a>
+</div>
+<div>
+    6 non-PAUSE users
+</div>
+</div>
+    </li>
+    <li>
+    </li>
+              </ul>
+            </div>
+          </nav>
+          <div class="content-navigation">
+<div class="breadcrumbs">
+  <span>
+    <a data-keyboard-shortcut="g a" rel="author" href="https://metacpan.org/author/RJBS" class="author-name">Ricardo SIGNES 😄</a>
+  </span>
+  <span>&nbsp;/&nbsp;</span>
+  <div class="release dist-release status-latest maturity-released">
+    <span class="dropdown"><b class="caret"></b></span>
+<select onchange="document.location.href='/release/'+this.value+'/view/lib/Algorithm/Diff.pm'" class="">
+<option selected="selected" value="RJBS/Algorithm-Diff-1.201">1.201
+  (RJBS on 2020-12-13)</option>
+<option value="RJBS/Algorithm-Diff-1.200">1.200
+  (RJBS on 2020-09-27)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1903">1.1903
+  (TYEMQ on 2014-11-26)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1902">1.1902
+  (TYEMQ on 2006-07-31)</option>
+<option value="TYEMQ/Algorithm-Diff-1.1901">1.1901
+  (TYEMQ on 2004-09-25)</option>
+<optgroup label="BackPAN">'
+<option value="ARISTOTLE/Algorithm-Diff-1.1903">1.1903
+  (ARISTOTLE on 2018-02-25)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.15">1.15
+  (NEDKONZ on 2002-04-30)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.11a">1.11a
+  (NEDKONZ on 2001-07-13)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.11">1.11
+  (NEDKONZ on 2001-07-12)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.10">1.10
+  (NEDKONZ on 2000-07-07)</option>
+<option value="NEDKONZ/Algorithm-Diff-1.06">1.06
+  (NEDKONZ on 2000-06-14)</option>
+<option value="MJD/Algorithm-Diff-0.59">0.59
+  (MJD on 1999-03-10)</option>
+<option value="MJD/Algorithm-Diff-0.58">0.58
+  (MJD on 1999-03-08)</option>
+<option value="MJD/Algorithm-Diff-0.56">0.56
+  (MJD on 1999-03-04)</option>
+<option value="MJD/Algorithm-Diff-0.57">0.57
+  (MJD on 1999-03-04)</option>
+<option value="MJD/Algorithm-Diff-0.55">0.55
+  (MJD on 1999-02-27)</option>
+</optgroup>
+</select>
+    <a data-keyboard-shortcut="g d" class="release-name" href="https://metacpan.org/dist/Algorithm-Diff">Algorithm-Diff-1.201</a>
+  </div>
+<span class="river-gauge-gauge">
+  <svg width="24px" height="15px" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+
+    <g>
+      <title>        River stage four 
+
+          • 52 direct dependents 
+          • 5555 total dependents
+      </title>
+
+      <rect x="0" y="0" width="4" height="15" fill="#7ea3f2"></rect>
+      <rect x="5" y="0" width="4" height="15" fill="#7ea3f2"></rect>
+      <rect x="10" y="0" width="4" height="15" fill="#7ea3f2"></rect>
+      <rect x="15" y="0" width="4" height="15" fill="#7ea3f2"></rect>
+      <rect x="20" y="0" width="4" height="15" fill="#e4e2e2"></rect>
+    </g>
+  </svg>
+
+</span>
+<div id="Algorithm-Diff-fav" class="logged_in">
+<form action="/account/favorite/add" style="display: inline" onsubmit="return favDistribution(this)">
+    <input type="hidden" name="remove" value="0">
+    <input type="hidden" name="release" value="Algorithm-Diff-1.201">
+    <input type="hidden" name="author" value="RJBS">
+    <input type="hidden" name="distribution" value="Algorithm-Diff">
+    <button type="submit" class="favorite highlight" title="Add to favorites"><span>22</span> ++</button>
+</form>
+</div>
+<div class="logged_out" style="display: inline;">
+<a href="" onclick="alert('Please sign in to add favorites'); return false" class="favorite highlight" title="Add to favorites">
+<span>22</span> ++</a>
+</div>
+   / <span>Algorithm::Diff</span>
+</div>
+          </div>
+          <main class="content">
+
+
+<div class="pod anchors">
+  <a name="___pod"></a>
+<div id="index-container" class="pull-right"><div class="index-border"><div class="index-header"><b>Contents</b> [ <button class="btn-link toggle-index"><span class="toggle-show">show</span><span class="toggle-hide">hide</span></button> ] </div><ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#INTRODUCTION">INTRODUCTION</a></li>
+  <li><a href="#USAGE">USAGE</a>
+    <ul>
+      <li><a href="#LCS">LCS</a></li>
+      <li><a href="#LCS_length">LCS_length</a></li>
+      <li><a href="#LCSidx">LCSidx</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#prepare">prepare</a></li>
+      <li><a href="#diff">diff</a></li>
+      <li><a href="#sdiff">sdiff</a></li>
+      <li><a href="#compact_diff">compact_diff</a></li>
+      <li><a href="#traverse_sequences">traverse_sequences</a></li>
+      <li><a href="#traverse_balanced">traverse_balanced</a></li>
+    </ul>
+  </li>
+  <li><a href="#KEY-GENERATION-FUNCTIONS">KEY GENERATION FUNCTIONS</a></li>
+  <li><a href="#ERROR-CHECKING">ERROR CHECKING</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+  <li><a href="#LICENSE">LICENSE</a></li>
+  <li><a href="#MAILING-LIST">MAILING LIST</a></li>
+  <li><a href="#CREDITS">CREDITS</a></li>
+</ul></div></div>
+
+<h1 id="NAME"><a href="#NAME" class="anchor"><span class="fa fa-bookmark black"></span></a>NAME</h1>
+
+<p>Algorithm::Diff - Compute `intelligent' differences between two files / lists</p>
+
+<h1 id="SYNOPSIS"><a href="#SYNOPSIS" class="anchor"><span class="fa fa-bookmark black"></span></a>SYNOPSIS</h1>
+
+<pre><div><div id="highlighter_169885" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl keyword">require</code> <code class="perl plain"><a href="https://metacpan.org/pod/Algorithm::Diff">Algorithm::Diff</a>;</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="perl comments"># This example produces traditional 'diff' output:</code></div><div class="line number4 index3 alt1"> </div><div class="line number5 index4 alt2"><code class="perl keyword">my</code> <code class="perl variable">$diff</code> <code class="perl plain">= Algorithm::Diff-&gt;new( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="perl variable">$diff</code><code class="perl plain">-&gt;Base( 1 );   </code><code class="perl comments"># Return line numbers, not indices</code></div><div class="line number8 index7 alt1"><code class="perl keyword">while</code><code class="perl plain">(  </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Next()  ) {</code></div><div class="line number9 index8 alt2"><code class="perl spaces">    </code><code class="perl keyword">next</code>   <code class="perl keyword">if</code>  <code class="perl variable">$diff</code><code class="perl plain">-&gt;Same();</code></div><div class="line number10 index9 alt1"><code class="perl spaces">    </code><code class="perl keyword">my</code> <code class="perl variable">$sep</code> <code class="perl plain">= </code><code class="perl string">''</code><code class="perl plain">;</code></div><div class="line number11 index10 alt2"><code class="perl spaces">    </code><code class="perl keyword">if</code><code class="perl plain">(  ! </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(2)  ) {</code></div><div class="line number12 index11 alt1"><code class="perl spaces">        </code><code class="perl functions">printf</code> <code class="perl string">"%d,%dd%d\n"</code><code class="perl plain">,</code></div><div class="line number13 index12 alt2"><code class="perl spaces">            </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Get(</code><code class="perl string">qw( Min1 Max1 Max2 )</code><code class="perl plain">);</code></div><div class="line number14 index13 alt1"><code class="perl spaces">    </code><code class="perl plain">} </code><code class="perl keyword">elsif</code><code class="perl plain">(  ! </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(1)  ) {</code></div><div class="line number15 index14 alt2"><code class="perl spaces">        </code><code class="perl functions">printf</code> <code class="perl string">"%da%d,%d\n"</code><code class="perl plain">,</code></div><div class="line number16 index15 alt1"><code class="perl spaces">            </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Get(</code><code class="perl string">qw( Max1 Min2 Max2 )</code><code class="perl plain">);</code></div><div class="line number17 index16 alt2"><code class="perl spaces">    </code><code class="perl plain">} </code><code class="perl keyword">else</code> <code class="perl plain">{</code></div><div class="line number18 index17 alt1"><code class="perl spaces">        </code><code class="perl variable">$sep</code> <code class="perl plain">= </code><code class="perl string">"---\n"</code><code class="perl plain">;</code></div><div class="line number19 index18 alt2"><code class="perl spaces">        </code><code class="perl functions">printf</code> <code class="perl string">"%d,%dc%d,%d\n"</code><code class="perl plain">,</code></div><div class="line number20 index19 alt1"><code class="perl spaces">            </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Get(</code><code class="perl string">qw( Min1 Max1 Min2 Max2 )</code><code class="perl plain">);</code></div><div class="line number21 index20 alt2"><code class="perl spaces">    </code><code class="perl plain">}</code></div><div class="line number22 index21 alt1"><code class="perl spaces">    </code><code class="perl functions">print</code> <code class="perl string">"&lt; $_"</code>   <code class="perl keyword">for</code>  <code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(1);</code></div><div class="line number23 index22 alt2"><code class="perl spaces">    </code><code class="perl functions">print</code> <code class="perl variable">$sep</code><code class="perl plain">;</code></div><div class="line number24 index23 alt1"><code class="perl spaces">    </code><code class="perl functions">print</code> <code class="perl string">"&gt; $_"</code>   <code class="perl keyword">for</code>  <code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(2);</code></div><div class="line number25 index24 alt2"><code class="perl plain">}</code></div><div class="line number26 index25 alt1"> </div><div class="line number27 index26 alt2"> </div><div class="line number28 index27 alt1"><code class="perl comments"># Alternate interfaces:</code></div><div class="line number29 index28 alt2"> </div><div class="line number30 index29 alt1"><code class="perl keyword">use</code> <code class="perl plain"><a href="https://metacpan.org/pod/Algorithm::Diff">Algorithm::Diff</a> </code><code class="perl string">qw(</code></div><div class="line number31 index30 alt2"><code class="perl spaces">    </code><code class="perl string">LCS LCS_length LCSidx</code></div><div class="line number32 index31 alt1"><code class="perl spaces">    </code><code class="perl string">diff sdiff compact_diff</code></div><div class="line number33 index32 alt2"><code class="perl spaces">    </code><code class="perl string">traverse_sequences traverse_balanced )</code><code class="perl plain">;</code></div><div class="line number34 index33 alt1"> </div><div class="line number35 index34 alt2"><code class="perl variable">@lcs</code>    <code class="perl plain">= LCS( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number36 index35 alt1"><code class="perl variable">$lcsref</code> <code class="perl plain">= LCS( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number37 index36 alt2"><code class="perl variable">$count</code>  <code class="perl plain">= LCS_length( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number38 index37 alt1"> </div><div class="line number39 index38 alt2"><code class="perl plain">( </code><code class="perl variable">$seq1idxref</code><code class="perl plain">, </code><code class="perl variable">$seq2idxref</code> <code class="perl plain">) = LCSidx( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number40 index39 alt1"> </div><div class="line number41 index40 alt2"> </div><div class="line number42 index41 alt1"><code class="perl comments"># Complicated interfaces:</code></div><div class="line number43 index42 alt2"> </div><div class="line number44 index43 alt1"><code class="perl variable">@diffs</code>  <code class="perl plain">= diff( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number45 index44 alt2"> </div><div class="line number46 index45 alt1"><code class="perl variable">@sdiffs</code> <code class="perl plain">= sdiff( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number47 index46 alt2"> </div><div class="line number48 index47 alt1"><code class="perl variable">@cdiffs</code> <code class="perl plain">= compact_diff( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number49 index48 alt2"> </div><div class="line number50 index49 alt1"><code class="perl plain">traverse_sequences(</code></div><div class="line number51 index50 alt2"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">@seq1</code><code class="perl plain">,</code></div><div class="line number52 index51 alt1"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">@seq2</code><code class="perl plain">,</code></div><div class="line number53 index52 alt2"><code class="perl spaces">    </code><code class="perl plain">{   </code><code class="perl string">MATCH</code>     <code class="perl plain">=&gt; \</code><code class="perl variable">&amp;callback1</code><code class="perl plain">,</code></div><div class="line number54 index53 alt1"><code class="perl spaces">        </code><code class="perl string">DISCARD_A</code> <code class="perl plain">=&gt; \</code><code class="perl variable">&amp;callback2</code><code class="perl plain">,</code></div><div class="line number55 index54 alt2"><code class="perl spaces">        </code><code class="perl string">DISCARD_B</code> <code class="perl plain">=&gt; \</code><code class="perl variable">&amp;callback3</code><code class="perl plain">,</code></div><div class="line number56 index55 alt1"><code class="perl spaces">    </code><code class="perl plain">},</code></div><div class="line number57 index56 alt2"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">&amp;key_generator</code><code class="perl plain">,</code></div><div class="line number58 index57 alt1"><code class="perl spaces">    </code><code class="perl variable">@extra_args</code><code class="perl plain">,</code></div><div class="line number59 index58 alt2"><code class="perl plain">);</code></div><div class="line number60 index59 alt1"> </div><div class="line number61 index60 alt2"><code class="perl plain">traverse_balanced(</code></div><div class="line number62 index61 alt1"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">@seq1</code><code class="perl plain">,</code></div><div class="line number63 index62 alt2"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">@seq2</code><code class="perl plain">,</code></div><div class="line number64 index63 alt1"><code class="perl spaces">    </code><code class="perl plain">{   </code><code class="perl string">MATCH</code>     <code class="perl plain">=&gt; \</code><code class="perl variable">&amp;callback1</code><code class="perl plain">,</code></div><div class="line number65 index64 alt2"><code class="perl spaces">        </code><code class="perl string">DISCARD_A</code> <code class="perl plain">=&gt; \</code><code class="perl variable">&amp;callback2</code><code class="perl plain">,</code></div><div class="line number66 index65 alt1"><code class="perl spaces">        </code><code class="perl string">DISCARD_B</code> <code class="perl plain">=&gt; \</code><code class="perl variable">&amp;callback3</code><code class="perl plain">,</code></div><div class="line number67 index66 alt2"><code class="perl spaces">        </code><code class="perl string">CHANGE</code>    <code class="perl plain">=&gt; \</code><code class="perl variable">&amp;callback4</code><code class="perl plain">,</code></div><div class="line number68 index67 alt1"><code class="perl spaces">    </code><code class="perl plain">},</code></div><div class="line number69 index68 alt2"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">&amp;key_generator</code><code class="perl plain">,</code></div><div class="line number70 index69 alt1"><code class="perl spaces">    </code><code class="perl variable">@extra_args</code><code class="perl plain">,</code></div><div class="line number71 index70 alt2"><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<h1 id="INTRODUCTION"><a href="#INTRODUCTION" class="anchor"><span class="fa fa-bookmark black"></span></a>INTRODUCTION</h1>
+
+<p>(by Mark-Jason Dominus)</p>
+
+<p>I once read an article written by the authors of <code>diff</code>; they said that they worked very hard on the algorithm until they found the right one.</p>
+
+<p>I think what they ended up using (and I hope someone will correct me,
+ because I am not very confident about this) was the `longest common 
+subsequence' method. In the LCS problem, you have two sequences of 
+items:</p>
+
+<pre><div><div id="highlighter_404952" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">a b c d f g h j </code><code class="perl string">q z</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="perl string">a </code><code class="perl plain">b c d e f g i j k r x y z</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>and you want to find the longest sequence of items that is present in
+ both original sequences in the same order. That is, you want to find a 
+new sequence <i>S</i> which can be obtained from the first sequence by 
+deleting some items, and from the second sequence by deleting other 
+items. You also want <i>S</i> to be as long as possible. In this case <i>S</i> is</p>
+
+<pre><div><div id="highlighter_681433" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">a b c d f g j z</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>From there it's only a small step to get diff-like output:</p>
+
+<pre><div><div id="highlighter_124171" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">e   h i   k   </code><code class="perl string">q r </code><code class="perl plain">x y</code></div><div class="line number2 index1 alt1"><code class="perl plain">+   - +   +   - + + +</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>This module solves the LCS problem. It also includes a canned function to generate <code>diff</code>-like output.</p>
+
+<p>It might seem from the example above that the LCS of two sequences is
+ always pretty obvious, but that's not always the case, especially when 
+the two sequences have many repeated elements. For example, consider</p>
+
+<pre><div><div id="highlighter_266241" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">a x b y c z p d q</code></div><div class="line number2 index1 alt1"><code class="perl plain">a b c a x b y c z</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>A naive approach might start by matching up the <code>a</code> and <code>b</code> that appear at the beginning of each sequence, like this:</p>
+
+<pre><div><div id="highlighter_981265" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">a x b y c         z p d q</code></div><div class="line number2 index1 alt1"><code class="perl plain">a   b   c a b y c z</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>This finds the common subsequence <code>a b c z</code>. But actually, the LCS is <code>a x b y c z</code>:</p>
+
+<pre><div><div id="highlighter_853667" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2">      <code class="perl plain">a x b y c z p d q</code></div><div class="line number2 index1 alt1"><code class="perl plain">a b c a x b y c z</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>or</p>
+
+<pre><div><div id="highlighter_328683" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">a       x b y c z p d q</code></div><div class="line number2 index1 alt1"><code class="perl plain">a b c a x b y c z</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<h1 id="USAGE"><a href="#USAGE" class="anchor"><span class="fa fa-bookmark black"></span></a>USAGE</h1>
+
+<p>(See also the README file and several example scripts include with this module.)</p>
+
+<p>This module now provides an object-oriented interface that uses less 
+memory and is easier to use than most of the previous procedural 
+interfaces. It also still provides several exportable functions. We'll 
+deal with these in ascending order of difficulty: <code>LCS</code>, <code>LCS_length</code>, <code>LCSidx</code>, OO interface, <code>prepare</code>, <code>diff</code>, <code>sdiff</code>, <code>traverse_sequences</code>, and <code>traverse_balanced</code>.</p>
+
+<h2 id="LCS"><a href="#LCS" class="anchor"><span class="fa fa-bookmark black"></span></a><code>LCS</code></h2>
+
+<p>Given references to two lists of items, LCS returns an array 
+containing their longest common subsequence. In scalar context, it 
+returns a reference to such a list.</p>
+
+<pre><div><div id="highlighter_408593" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">@lcs</code>    <code class="perl plain">= LCS( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl variable">$lcsref</code> <code class="perl plain">= LCS( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>LCS</code> may be passed an optional third parameter; this is a CODE reference to a key generation function. See <a href="#KEY-GENERATION-FUNCTIONS">"KEY GENERATION FUNCTIONS"</a>.</p>
+
+<pre><div><div id="highlighter_688934" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">@lcs</code>    <code class="perl plain">= LCS( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code><code class="perl plain">, \</code><code class="perl variable">&amp;keyGen</code><code class="perl plain">, </code><code class="perl variable">@args</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl variable">$lcsref</code> <code class="perl plain">= LCS( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code><code class="perl plain">, \</code><code class="perl variable">&amp;keyGen</code><code class="perl plain">, </code><code class="perl variable">@args</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Additional parameters, if any, will be passed to the key generation routine.</p>
+
+<h2 id="LCS_length"><a href="#LCS_length" class="anchor"><span class="fa fa-bookmark black"></span></a><code>LCS_length</code></h2>
+
+<p>This is just like <code>LCS</code> except it only returns the length of the longest common subsequence. This provides a performance gain of about 9% compared to <code>LCS</code>.</p>
+
+<h2 id="LCSidx"><a href="#LCSidx" class="anchor"><span class="fa fa-bookmark black"></span></a><code>LCSidx</code></h2>
+
+<p>Like <code>LCS</code> except it returns references to two arrays. The
+ first array contains the indices into @seq1 where the LCS items are 
+located. The second array contains the indices into @seq2 where the LCS 
+items are located.</p>
+
+<p>Therefore, the following three lists will contain the same values:</p>
+
+<pre><div><div id="highlighter_176048" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl keyword">my</code><code class="perl plain">( </code><code class="perl variable">$idx1</code><code class="perl plain">, </code><code class="perl variable">$idx2</code> <code class="perl plain">) = LCSidx( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl keyword">my</code> <code class="perl variable">@list1</code> <code class="perl plain">= </code><code class="perl variable">@seq1</code><code class="perl plain">[ </code><code class="perl variable">@$idx1</code> <code class="perl plain">];</code></div><div class="line number3 index2 alt2"><code class="perl keyword">my</code> <code class="perl variable">@list2</code> <code class="perl plain">= </code><code class="perl variable">@seq2</code><code class="perl plain">[ </code><code class="perl variable">@$idx2</code> <code class="perl plain">];</code></div><div class="line number4 index3 alt1"><code class="perl keyword">my</code> <code class="perl variable">@list3</code> <code class="perl plain">= LCS( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<h2 id="new"><a href="#new" class="anchor"><span class="fa fa-bookmark black"></span></a><code>new</code></h2>
+
+<pre><div><div id="highlighter_141108" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$diff</code> <code class="perl plain">= Algorithm::Diff-&gt;new( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl variable">$diff</code> <code class="perl plain">= Algorithm::Diff-&gt;new( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code><code class="perl plain">, \</code><code class="perl variable">%opts</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>new</code> computes the smallest set of additions and deletions
+ necessary to turn the first sequence into the second and compactly 
+records them in the object.</p>
+
+<p>You use the object to iterate over <i>hunks</i>, where each hunk represents a contiguous section of items which should be added, deleted, replaced, or left unchanged.</p>
+
+<p>The following summary of all of the methods looks a lot like Perl code but some of the symbols have different meanings:</p>
+
+<pre><div><div id="highlighter_84638" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">[ ]     Encloses optional arguments</code></div><div class="line number2 index1 alt1"><code class="perl plain">:       Is followed by the </code><code class="perl keyword">default</code> <code class="perl plain">value </code><code class="perl keyword">for</code> <code class="perl plain">an optional argument</code></div><div class="line number3 index2 alt2"><code class="perl plain">|       Separates alternate </code><code class="perl keyword">return</code> <code class="perl plain">results</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Method summary:</p>
+
+<pre><div><div id="highlighter_816683" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$obj</code>        <code class="perl plain">= Algorithm::Diff-&gt;new( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code><code class="perl plain">, [ \</code><code class="perl variable">%opts</code> <code class="perl plain">] );</code></div><div class="line number2 index1 alt1"><code class="perl variable">$pos</code>        <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Next(  [ </code><code class="perl variable">$count</code> <code class="perl plain">: 1 ] );</code></div><div class="line number3 index2 alt2"><code class="perl variable">$revPos</code>     <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Prev(  [ </code><code class="perl variable">$count</code> <code class="perl plain">: 1 ] );</code></div><div class="line number4 index3 alt1"><code class="perl variable">$obj</code>        <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Reset( [ </code><code class="perl variable">$pos</code> <code class="perl plain">: 0 ] );</code></div><div class="line number5 index4 alt2"><code class="perl variable">$copy</code>       <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Copy(  [ </code><code class="perl variable">$pos</code><code class="perl plain">, [ </code><code class="perl variable">$newBase</code> <code class="perl plain">] ] );</code></div><div class="line number6 index5 alt1"><code class="perl variable">$oldBase</code>    <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Base(  [ </code><code class="perl variable">$newBase</code> <code class="perl plain">] );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Note that all of the following methods <code>die</code> if used on an object that is "reset" (not currently pointing at any hunk).</p>
+
+<pre><div><div id="highlighter_440773" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$bits</code>       <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Diff(  );</code></div><div class="line number2 index1 alt1"><code class="perl variable">@items</code><code class="perl plain">|</code><code class="perl variable">$cnt</code> <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Same(  );</code></div><div class="line number3 index2 alt2"><code class="perl variable">@items</code><code class="perl plain">|</code><code class="perl variable">$cnt</code> <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Items( </code><code class="perl variable">$seqNum</code> <code class="perl plain">);</code></div><div class="line number4 index3 alt1"><code class="perl variable">@idxs</code> <code class="perl plain">|</code><code class="perl variable">$cnt</code> <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Range( </code><code class="perl variable">$seqNum</code><code class="perl plain">, [ </code><code class="perl variable">$base</code> <code class="perl plain">] );</code></div><div class="line number5 index4 alt2"><code class="perl variable">$minIdx</code>     <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Min(   </code><code class="perl variable">$seqNum</code><code class="perl plain">, [ </code><code class="perl variable">$base</code> <code class="perl plain">] );</code></div><div class="line number6 index5 alt1"><code class="perl variable">$maxIdx</code>     <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Max(   </code><code class="perl variable">$seqNum</code><code class="perl plain">, [ </code><code class="perl variable">$base</code> <code class="perl plain">] );</code></div><div class="line number7 index6 alt2"><code class="perl variable">@values</code>     <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Get(   </code><code class="perl variable">@names</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Passing in <code>undef</code> for an optional argument is always treated the same as if no argument were passed in.</p>
+
+<dl>
+
+<dt id="Next"><a href="#Next" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Next</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_53451" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$pos</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Next();    </code><code class="perl comments"># Move forward 1 hunk</code></div><div class="line number2 index1 alt1"><code class="perl variable">$pos</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Next( 2 ); </code><code class="perl comments"># Move forward 2 hunks</code></div><div class="line number3 index2 alt2"><code class="perl variable">$pos</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Next(-5);  </code><code class="perl comments"># Move backward 5 hunks</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Next</code> moves the object to point at the next hunk. The 
+object starts out "reset", which means it isn't pointing at any hunk. If
+ the object is reset, then <code>Next()</code> moves to the first hunk.</p>
+
+<p><code>Next</code> returns a true value iff the move didn't go past the last hunk. So <code>Next(0)</code> will return true iff the object is not reset.</p>
+
+<p>Actually, <code>Next</code> returns the object's new position, which is a number between 1 and the number of hunks (inclusive), or returns a false value.</p>
+
+</dd>
+<dt id="Prev"><a href="#Prev" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Prev</code></dt>
+<dd>
+
+<p><code>Prev($N)</code> is almost identical to <code>Next(-$N)</code>; it moves to the $Nth previous hunk. On a 'reset' object, <code>Prev()</code> [and <code>Next(-1)</code>] move to the last hunk.</p>
+
+<p>The position returned by <code>Prev</code> is relative to the <i>end</i> of the hunks; -1 for the last hunk, -2 for the second-to-last, etc.</p>
+
+</dd>
+<dt id="Reset"><a href="#Reset" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Reset</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_316653" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$diff</code><code class="perl plain">-&gt;Reset();     </code><code class="perl comments"># Reset the object's position</code></div><div class="line number2 index1 alt1"><code class="perl variable">$diff</code><code class="perl plain">-&gt;Reset(</code><code class="perl variable">$pos</code><code class="perl plain">); </code><code class="perl comments"># Move to the specified hunk</code></div><div class="line number3 index2 alt2"><code class="perl variable">$diff</code><code class="perl plain">-&gt;Reset(1);    </code><code class="perl comments"># Move to the first hunk</code></div><div class="line number4 index3 alt1"><code class="perl variable">$diff</code><code class="perl plain">-&gt;Reset(-1);   </code><code class="perl comments"># Move to the last hunk</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Reset</code> returns the object, so, for example, you could use <code>$diff-&gt;Reset()-&gt;Next(-1)</code> to get the number of hunks.</p>
+
+</dd>
+<dt id="Copy"><a href="#Copy" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Copy</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_141295" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$copy</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Copy( </code><code class="perl variable">$newPos</code><code class="perl plain">, </code><code class="perl variable">$newBase</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Copy</code> returns a copy of the object. The copy and the 
+original object share most of their data, so making copies takes very 
+little memory. The copy maintains its own position (separate from the 
+original), which is the main purpose of copies. It also maintains its 
+own base.</p>
+
+<p>By default, the copy's position starts out the same as the original object's position. But <code>Copy</code> takes an optional first argument to set the new position, so the following three snippets are equivalent:</p>
+
+<pre><div><div id="highlighter_874027" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$copy</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Copy(</code><code class="perl variable">$pos</code><code class="perl plain">);</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="perl variable">$copy</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Copy();</code></div><div class="line number4 index3 alt1"><code class="perl variable">$copy</code><code class="perl plain">-&gt;Reset(</code><code class="perl variable">$pos</code><code class="perl plain">);</code></div><div class="line number5 index4 alt2"> </div><div class="line number6 index5 alt1"><code class="perl variable">$copy</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Copy()-&gt;Reset(</code><code class="perl variable">$pos</code><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Copy</code> takes an optional second argument to set the base 
+for the copy. If you wish to change the base of the copy but leave the 
+position the same as in the original, here are two equivalent ways:</p>
+
+<pre><div><div id="highlighter_298489" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$copy</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Copy();</code></div><div class="line number2 index1 alt1"><code class="perl variable">$copy</code><code class="perl plain">-&gt;Base( 0 );</code></div><div class="line number3 index2 alt2"> </div><div class="line number4 index3 alt1"><code class="perl variable">$copy</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Copy(</code><code class="perl functions">undef</code><code class="perl plain">,0);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Here are two equivalent way to get a "reset" copy:</p>
+
+<pre><div><div id="highlighter_147724" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$copy</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Copy(0);</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="perl variable">$copy</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Copy()-&gt;Reset();</code></div></div></td></tr></tbody></table></div></div></pre>
+
+</dd>
+<dt id="Diff"><a href="#Diff" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Diff</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_203687" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$bits</code> <code class="perl plain">= </code><code class="perl variable">$obj</code><code class="perl plain">-&gt;Diff();</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Diff</code> returns a true value iff the current hunk contains 
+items that are different between the two sequences. It actually returns 
+one of the follow 4 values:</p>
+
+<dl>
+
+<dt id="3"><a href="#3" class="anchor"><span class="fa fa-bookmark black"></span></a><a id="pod"></a>3</dt>
+<dd>
+
+<p><code>3==(1|2)</code>. This hunk contains items from @seq1 and the 
+items from @seq2 that should replace them. Both sequence 1 and 2 contain
+ changed items so both the 1 and 2 bits are set.</p>
+
+</dd>
+<dt id="2"><a href="#2" class="anchor"><span class="fa fa-bookmark black"></span></a><a id="pod1"></a>2</dt>
+<dd>
+
+<p>This hunk only contains items from @seq2 that should be inserted (not
+ items from @seq1). Only sequence 2 contains changed items so only the 2
+ bit is set.</p>
+
+</dd>
+<dt id="1"><a href="#1" class="anchor"><span class="fa fa-bookmark black"></span></a><a id="pod2"></a>1</dt>
+<dd>
+
+<p>This hunk only contains items from @seq1 that should be deleted (not 
+items from @seq2). Only sequence 1 contains changed items so only the 1 
+bit is set.</p>
+
+</dd>
+<dt id="0"><a href="#0" class="anchor"><span class="fa fa-bookmark black"></span></a><a id="pod3"></a>0</dt>
+<dd>
+
+<p>This means that the items in this hunk are the same in both 
+sequences. Neither sequence 1 nor 2 contain changed items so neither the
+ 1 nor the 2 bits are set.</p>
+
+</dd>
+</dl>
+
+</dd>
+<dt id="Same"><a href="#Same" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Same</code></dt>
+<dd>
+
+<p><code>Same</code> returns a true value iff the current hunk contains 
+items that are the same in both sequences. It actually returns the list 
+of items if they are the same or an empty list if they aren't. In a 
+scalar context, it returns the size of the list.</p>
+
+</dd>
+<dt id="Items"><a href="#Items" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Items</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_434020" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$count</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(2);</code></div><div class="line number2 index1 alt1"><code class="perl variable">@items</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(</code><code class="perl variable">$seqNum</code><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Items</code> returns the (number of) items from the specified sequence that are part of the current hunk.</p>
+
+<p>If the current hunk contains only insertions, then <code>$diff-&gt;Items(1)</code> will return an empty list (0 in a scalar context). If the current hunk contains only deletions, then <code>$diff-&gt;Items(2)</code> will return an empty list (0 in a scalar context).</p>
+
+<p>If the hunk contains replacements, then both <code>$diff-&gt;Items(1)</code> and <code>$diff-&gt;Items(2)</code> will return different, non-empty lists.</p>
+
+<p>Otherwise, the hunk contains identical items and all of the following will return the same lists:</p>
+
+<pre><div><div id="highlighter_262350" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">@items</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(1);</code></div><div class="line number2 index1 alt1"><code class="perl variable">@items</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(2);</code></div><div class="line number3 index2 alt2"><code class="perl variable">@items</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Same();</code></div></div></td></tr></tbody></table></div></div></pre>
+
+</dd>
+<dt id="Range"><a href="#Range" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Range</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_534608" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$count</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Range( </code><code class="perl variable">$seqNum</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl variable">@indices</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Range( </code><code class="perl variable">$seqNum</code> <code class="perl plain">);</code></div><div class="line number3 index2 alt2"><code class="perl variable">@indices</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Range( </code><code class="perl variable">$seqNum</code><code class="perl plain">, </code><code class="perl variable">$base</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Range</code> is like <code>Items</code> except that it returns a list of <i>indices</i>
+ to the items rather than the items themselves. By default, the index of
+ the first item (in each sequence) is 0 but this can be changed by 
+calling the <code>Base</code> method. So, by default, the following two snippets return the same lists:</p>
+
+<pre><div><div id="highlighter_255823" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">@list</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(2);</code></div><div class="line number2 index1 alt1"><code class="perl variable">@list</code> <code class="perl plain">= </code><code class="perl variable">@seq2</code><code class="perl plain">[ </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Range(2) ];</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>You can also specify the base to use as the second argument. So the following two snippets <i>always</i> return the same lists:</p>
+
+<pre><div><div id="highlighter_570051" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">@list</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Items(1);</code></div><div class="line number2 index1 alt1"><code class="perl variable">@list</code> <code class="perl plain">= </code><code class="perl variable">@seq1</code><code class="perl plain">[ </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Range(1,0) ];</code></div></div></td></tr></tbody></table></div></div></pre>
+
+</dd>
+<dt id="Base"><a href="#Base" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Base</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_439407" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$curBase</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Base();</code></div><div class="line number2 index1 alt1"><code class="perl variable">$oldBase</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Base(</code><code class="perl variable">$newBase</code><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Base</code> sets and/or returns the current base (usually 0 or 
+1) that is used when you request range information. The base defaults to
+ 0 so that range information is returned as array indices. You can set 
+the base to 1 if you want to report traditional line numbers instead.</p>
+
+</dd>
+<dt id="Min"><a href="#Min" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Min</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_720857" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$min1</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Min(1);</code></div><div class="line number2 index1 alt1"><code class="perl variable">$min</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Min( </code><code class="perl variable">$seqNum</code><code class="perl plain">, </code><code class="perl variable">$base</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Min</code> returns the first value that <code>Range</code> would return (given the same arguments) or returns <code>undef</code> if <code>Range</code> would return an empty list.</p>
+
+</dd>
+<dt id="Max"><a href="#Max" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Max</code></dt>
+<dd>
+
+<p><code>Max</code> returns the last value that <code>Range</code> would return or <code>undef</code>.</p>
+
+</dd>
+<dt id="Get"><a href="#Get" class="anchor"><span class="fa fa-bookmark black"></span></a><code>Get</code></dt>
+<dd>
+
+<pre><div><div id="highlighter_571479" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">( </code><code class="perl variable">$n</code><code class="perl plain">, </code><code class="perl variable">$x</code><code class="perl plain">, </code><code class="perl variable">$r</code> <code class="perl plain">) = </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Get(</code><code class="perl string">qw( min1 max1 range1 )</code><code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl variable">@values</code> <code class="perl plain">= </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Get(</code><code class="perl string">qw( 0min2 1max2 range2 same base )</code><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>Get</code> returns one or more scalar values. You pass in a 
+list of the names of the values you want returned. Each name must match 
+one of the following regexes:</p>
+
+<pre><div><div id="highlighter_92906" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">/^(-?\d+)?(min|max)[12]$/i</code></div><div class="line number2 index1 alt1"><code class="perl plain">/^(range[12]|same|diff|base)$/i</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>The 1 or 2 after a name says which sequence you want the information 
+for (and where allowed, it is required). The optional number before 
+"min" or "max" is the base to use. So the following equalities hold:</p>
+
+<pre><div><div id="highlighter_752115" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$diff</code><code class="perl plain">-&gt;Get(</code><code class="perl string">'min1'</code><code class="perl plain">) == </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Min(1)</code></div><div class="line number2 index1 alt1"><code class="perl variable">$diff</code><code class="perl plain">-&gt;Get(</code><code class="perl string">'0min2'</code><code class="perl plain">) == </code><code class="perl variable">$diff</code><code class="perl plain">-&gt;Min(2,0)</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Using <code>Get</code> in a scalar context when you've passed in more than one name is a fatal error (<code>die</code> is called).</p>
+
+</dd>
+</dl>
+
+<h2 id="prepare"><a href="#prepare" class="anchor"><span class="fa fa-bookmark black"></span></a><code>prepare</code></h2>
+
+<p>Given a reference to a list of items, <code>prepare</code> returns a reference to a hash which can be used when comparing this sequence to other sequences with <code>LCS</code> or <code>LCS_length</code>.</p>
+
+<pre><div><div id="highlighter_920071" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$prep</code> <code class="perl plain">= prepare( \</code><code class="perl variable">@seq1</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl keyword">for</code> <code class="perl variable">$i</code> <code class="perl plain">( 0 .. 10_000 )</code></div><div class="line number3 index2 alt2"><code class="perl plain">{</code></div><div class="line number4 index3 alt1"><code class="perl spaces">    </code><code class="perl variable">@lcs</code> <code class="perl plain">= LCS( </code><code class="perl variable">$prep</code><code class="perl plain">, </code><code class="perl variable">$seq</code><code class="perl plain">[</code><code class="perl variable">$i</code><code class="perl plain">] );</code></div><div class="line number5 index4 alt2"><code class="perl spaces">    </code><code class="perl comments"># do something useful with @lcs</code></div><div class="line number6 index5 alt1"><code class="perl plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>prepare</code> may be passed an optional third parameter; this is a CODE reference to a key generation function. See <a href="#KEY-GENERATION-FUNCTIONS">"KEY GENERATION FUNCTIONS"</a>.</p>
+
+<pre><div><div id="highlighter_113709" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">$prep</code> <code class="perl plain">= prepare( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">&amp;keyGen</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl keyword">for</code> <code class="perl variable">$i</code> <code class="perl plain">( 0 .. 10_000 )</code></div><div class="line number3 index2 alt2"><code class="perl plain">{</code></div><div class="line number4 index3 alt1"><code class="perl spaces">    </code><code class="perl variable">@lcs</code> <code class="perl plain">= LCS( </code><code class="perl variable">$seq</code><code class="perl plain">[</code><code class="perl variable">$i</code><code class="perl plain">], </code><code class="perl variable">$prep</code><code class="perl plain">, \</code><code class="perl variable">&amp;keyGen</code> <code class="perl plain">);</code></div><div class="line number5 index4 alt2"><code class="perl spaces">    </code><code class="perl comments"># do something useful with @lcs</code></div><div class="line number6 index5 alt1"><code class="perl plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Using <code>prepare</code> provides a performance gain of about 50% when calling LCS many times compared with not preparing.</p>
+
+<h2 id="diff"><a href="#diff" class="anchor"><span class="fa fa-bookmark black"></span></a><code>diff</code></h2>
+
+<pre><div><div id="highlighter_446877" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">@diffs</code>     <code class="perl plain">= diff( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl variable">$diffs_ref</code> <code class="perl plain">= diff( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>diff</code> computes the smallest set of additions and 
+deletions necessary to turn the first sequence into the second, and 
+returns a description of these changes. The description is a list of <i>hunks</i>;
+ each hunk represents a contiguous section of items which should be 
+added, deleted, or replaced. (Hunks containing unchanged items are not 
+included.)</p>
+
+<p>The return value of <code>diff</code> is a list of hunks, or, in scalar context, a reference to such a list. If there are no differences, the list will be empty.</p>
+
+<p>Here is an example. Calling <code>diff</code> for the following two sequences:</p>
+
+<pre><div><div id="highlighter_221335" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">a b c e h j l m n p</code></div><div class="line number2 index1 alt1"><code class="perl plain">b c d e f j k l m r s t</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>would produce the following list:</p>
+
+<pre><div><div id="highlighter_758855" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">(</code></div><div class="line number2 index1 alt1"><code class="perl spaces">  </code><code class="perl plain">[ [ </code><code class="perl string">'-'</code><code class="perl plain">, 0, </code><code class="perl string">'a'</code> <code class="perl plain">] ],</code></div><div class="line number3 index2 alt2"> </div><div class="line number4 index3 alt1"><code class="perl spaces">  </code><code class="perl plain">[ [ </code><code class="perl string">'+'</code><code class="perl plain">, 2, </code><code class="perl string">'d'</code> <code class="perl plain">] ],</code></div><div class="line number5 index4 alt2"> </div><div class="line number6 index5 alt1"><code class="perl spaces">  </code><code class="perl plain">[ [ </code><code class="perl string">'-'</code><code class="perl plain">, 4, </code><code class="perl string">'h'</code> <code class="perl plain">],</code></div><div class="line number7 index6 alt2"><code class="perl spaces">    </code><code class="perl plain">[ </code><code class="perl string">'+'</code><code class="perl plain">, 4, </code><code class="perl string">'f'</code> <code class="perl plain">] ],</code></div><div class="line number8 index7 alt1"> </div><div class="line number9 index8 alt2"><code class="perl spaces">  </code><code class="perl plain">[ [ </code><code class="perl string">'+'</code><code class="perl plain">, 6, </code><code class="perl string">'k'</code> <code class="perl plain">] ],</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="perl spaces">  </code><code class="perl plain">[ [ </code><code class="perl string">'-'</code><code class="perl plain">,  8, </code><code class="perl string">'n'</code> <code class="perl plain">],</code></div><div class="line number12 index11 alt1"><code class="perl spaces">    </code><code class="perl plain">[ </code><code class="perl string">'-'</code><code class="perl plain">,  9, </code><code class="perl string">'p'</code> <code class="perl plain">],</code></div><div class="line number13 index12 alt2"><code class="perl spaces">    </code><code class="perl plain">[ </code><code class="perl string">'+'</code><code class="perl plain">,  9, </code><code class="perl string">'r'</code> <code class="perl plain">],</code></div><div class="line number14 index13 alt1"><code class="perl spaces">    </code><code class="perl plain">[ </code><code class="perl string">'+'</code><code class="perl plain">, 10, </code><code class="perl string">'s'</code> <code class="perl plain">],</code></div><div class="line number15 index14 alt2"><code class="perl spaces">    </code><code class="perl plain">[ </code><code class="perl string">'+'</code><code class="perl plain">, 11, </code><code class="perl string">'t'</code> <code class="perl plain">] ],</code></div><div class="line number16 index15 alt1"><code class="perl plain">)</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>There are five hunks here. The first hunk says that the <code>a</code> at position 0 of the first sequence should be deleted (<code>-</code>). The second hunk says that the <code>d</code> at position 2 of the second sequence should be inserted (<code>+</code>). The third hunk says that the <code>h</code> at position 4 of the first sequence should be removed and replaced with the <code>f</code> from position 4 of the second sequence. And so on.</p>
+
+<p><code>diff</code> may be passed an optional third parameter; this is a CODE reference to a key generation function. See <a href="#KEY-GENERATION-FUNCTIONS">"KEY GENERATION FUNCTIONS"</a>.</p>
+
+<p>Additional parameters, if any, will be passed to the key generation routine.</p>
+
+<h2 id="sdiff"><a href="#sdiff" class="anchor"><span class="fa fa-bookmark black"></span></a><code>sdiff</code></h2>
+
+<pre><div><div id="highlighter_756584" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">@sdiffs</code>     <code class="perl plain">= sdiff( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div><div class="line number2 index1 alt1"><code class="perl variable">$sdiffs_ref</code> <code class="perl plain">= sdiff( \</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>sdiff</code> computes all necessary components to show two 
+sequences and their minimized differences side by side, just like the 
+Unix-utility <i>sdiff</i> does:</p>
+
+<pre><div><div id="highlighter_817061" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">same             same</code></div><div class="line number2 index1 alt1"><code class="perl keyword">before</code>     <code class="perl plain">|     </code><code class="perl keyword">after</code></div><div class="line number3 index2 alt2"><code class="perl plain">old        &lt;     -</code></div><div class="line number4 index3 alt1"><code class="perl plain">-          &gt;     new</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>It returns a list of array refs, each pointing to an array of display
+ instructions. In scalar context it returns a reference to such a list. 
+If there are no differences, the list will have one entry per item, each
+ indicating that the item was unchanged.</p>
+
+<p>Display instructions consist of three elements: A modifier indicator (<code>+</code>: Element added, <code>-</code>: Element removed, <code>u</code>: Element unmodified, <code>c</code>: Element changed) and the value of the old and new elements, to be displayed side-by-side.</p>
+
+<p>An <code>sdiff</code> of the following two sequences:</p>
+
+<pre><div><div id="highlighter_155646" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">a b c e h j l m n p</code></div><div class="line number2 index1 alt1"><code class="perl plain">b c d e f j k l m r s t</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>results in</p>
+
+<pre><div><div id="highlighter_481362" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">( [ </code><code class="perl string">'-'</code><code class="perl plain">, </code><code class="perl string">'a'</code><code class="perl plain">, </code><code class="perl string">''</code>  <code class="perl plain">],</code></div><div class="line number2 index1 alt1"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'u'</code><code class="perl plain">, </code><code class="perl string">'b'</code><code class="perl plain">, </code><code class="perl string">'b'</code> <code class="perl plain">],</code></div><div class="line number3 index2 alt2"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'u'</code><code class="perl plain">, </code><code class="perl string">'c'</code><code class="perl plain">, </code><code class="perl string">'c'</code> <code class="perl plain">],</code></div><div class="line number4 index3 alt1"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'+'</code><code class="perl plain">, </code><code class="perl string">''</code><code class="perl plain">,  </code><code class="perl string">'d'</code> <code class="perl plain">],</code></div><div class="line number5 index4 alt2"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'u'</code><code class="perl plain">, </code><code class="perl string">'e'</code><code class="perl plain">, </code><code class="perl string">'e'</code> <code class="perl plain">],</code></div><div class="line number6 index5 alt1"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'c'</code><code class="perl plain">, </code><code class="perl string">'h'</code><code class="perl plain">, </code><code class="perl string">'f'</code> <code class="perl plain">],</code></div><div class="line number7 index6 alt2"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'u'</code><code class="perl plain">, </code><code class="perl string">'j'</code><code class="perl plain">, </code><code class="perl string">'j'</code> <code class="perl plain">],</code></div><div class="line number8 index7 alt1"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'+'</code><code class="perl plain">, </code><code class="perl string">''</code><code class="perl plain">,  </code><code class="perl string">'k'</code> <code class="perl plain">],</code></div><div class="line number9 index8 alt2"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'u'</code><code class="perl plain">, </code><code class="perl string">'l'</code><code class="perl plain">, </code><code class="perl string">'l'</code> <code class="perl plain">],</code></div><div class="line number10 index9 alt1"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'u'</code><code class="perl plain">, </code><code class="perl string">'m'</code><code class="perl plain">, </code><code class="perl string">'m'</code> <code class="perl plain">],</code></div><div class="line number11 index10 alt2"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'c'</code><code class="perl plain">, </code><code class="perl string">'n'</code><code class="perl plain">, </code><code class="perl string">'r'</code> <code class="perl plain">],</code></div><div class="line number12 index11 alt1"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'c'</code><code class="perl plain">, </code><code class="perl string">'p'</code><code class="perl plain">, </code><code class="perl string">'s'</code> <code class="perl plain">],</code></div><div class="line number13 index12 alt2"><code class="perl spaces">  </code><code class="perl plain">[ </code><code class="perl string">'+'</code><code class="perl plain">, </code><code class="perl string">''</code><code class="perl plain">,  </code><code class="perl string">'t'</code> <code class="perl plain">],</code></div><div class="line number14 index13 alt1"><code class="perl plain">)</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>sdiff</code> may be passed an optional third parameter; this is a CODE reference to a key generation function. See <a href="#KEY-GENERATION-FUNCTIONS">"KEY GENERATION FUNCTIONS"</a>.</p>
+
+<p>Additional parameters, if any, will be passed to the key generation routine.</p>
+
+<h2 id="compact_diff"><a href="#compact_diff" class="anchor"><span class="fa fa-bookmark black"></span></a><code>compact_diff</code></h2>
+
+<p><code>compact_diff</code> is much like <code>sdiff</code> except it 
+returns a much more compact description consisting of just one flat list
+ of indices. An example helps explain the format:</p>
+
+<pre><div><div id="highlighter_199057" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl keyword">my</code> <code class="perl variable">@a</code> <code class="perl plain">= </code><code class="perl string">qw( a b c   e  h j   l m n p      )</code><code class="perl plain">;</code></div><div class="line number2 index1 alt1"><code class="perl keyword">my</code> <code class="perl variable">@b</code> <code class="perl plain">= </code><code class="perl string">qw(   b c d e f  j k l m    r s t )</code><code class="perl plain">;</code></div><div class="line number3 index2 alt2"><code class="perl variable">@cdiff</code> <code class="perl plain">= compact_diff( \</code><code class="perl variable">@a</code><code class="perl plain">, \</code><code class="perl variable">@b</code> <code class="perl plain">);</code></div><div class="line number4 index3 alt1"><code class="perl comments"># Returns:</code></div><div class="line number5 index4 alt2"><code class="perl comments">#   @a      @b       @a       @b</code></div><div class="line number6 index5 alt1"><code class="perl comments">#  start   start   values   values</code></div><div class="line number7 index6 alt2"><code class="perl plain">(    0,      0,   </code><code class="perl comments">#       =</code></div><div class="line number8 index7 alt1"><code class="perl spaces">     </code><code class="perl plain">0,      0,   </code><code class="perl comments">#    a  !</code></div><div class="line number9 index8 alt2"><code class="perl spaces">     </code><code class="perl plain">1,      0,   </code><code class="perl comments">#  b c  =  b c</code></div><div class="line number10 index9 alt1"><code class="perl spaces">     </code><code class="perl plain">3,      2,   </code><code class="perl comments">#       !  d</code></div><div class="line number11 index10 alt2"><code class="perl spaces">     </code><code class="perl plain">3,      3,   </code><code class="perl comments">#    e  =  e</code></div><div class="line number12 index11 alt1"><code class="perl spaces">     </code><code class="perl plain">4,      4,   </code><code class="perl comments">#    f  !  h</code></div><div class="line number13 index12 alt2"><code class="perl spaces">     </code><code class="perl plain">5,      5,   </code><code class="perl comments">#    j  =  j</code></div><div class="line number14 index13 alt1"><code class="perl spaces">     </code><code class="perl plain">6,      6,   </code><code class="perl comments">#       !  k</code></div><div class="line number15 index14 alt2"><code class="perl spaces">     </code><code class="perl plain">6,      7,   </code><code class="perl comments">#  l m  =  l m</code></div><div class="line number16 index15 alt1"><code class="perl spaces">     </code><code class="perl plain">8,      9,   </code><code class="perl comments">#  n p  !  r s t</code></div><div class="line number17 index16 alt2"><code class="perl spaces">    </code><code class="perl plain">10,     12,   </code><code class="perl comments">#</code></div><div class="line number18 index17 alt1"><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>The 0th, 2nd, 4th, etc. entries are all indices into @seq1 (@a in the
+ above example) indicating where a hunk begins. The 1st, 3rd, 5th, etc. 
+entries are all indices into @seq2 (@b in the above example) indicating 
+where the same hunk begins.</p>
+
+<p>So each pair of indices (except the last pair) describes where a hunk
+ begins (in each sequence). Since each hunk must end at the item just 
+before the item that starts the next hunk, the next pair of indices can 
+be used to determine where the hunk ends.</p>
+
+<p>So, the first 4 entries (0..3) describe the first hunk. Entries 0 and
+ 1 describe where the first hunk begins (and so are always both 0). 
+Entries 2 and 3 describe where the next hunk begins, so subtracting 1 
+from each tells us where the first hunk ends. That is, the first hunk 
+contains items <code>$diff[0]</code> through <code>$diff[2] - 1</code> of the first sequence and contains items <code>$diff[1]</code> through <code>$diff[3] - 1</code> of the second sequence.</p>
+
+<p>In other words, the first hunk consists of the following two lists of items:</p>
+
+<pre><div><div id="highlighter_836420" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2">           <code class="perl comments">#  1st pair     2nd pair</code></div><div class="line number2 index1 alt1"><code class="perl spaces">           </code><code class="perl comments"># of indices   of indices</code></div><div class="line number3 index2 alt2"><code class="perl variable">@list1</code> <code class="perl plain">= </code><code class="perl variable">@a</code><code class="perl plain">[ </code><code class="perl variable">$cdiff</code><code class="perl plain">[0] .. </code><code class="perl variable">$cdiff</code><code class="perl plain">[2]-1 ];</code></div><div class="line number4 index3 alt1"><code class="perl variable">@list2</code> <code class="perl plain">= </code><code class="perl variable">@b</code><code class="perl plain">[ </code><code class="perl variable">$cdiff</code><code class="perl plain">[1] .. </code><code class="perl variable">$cdiff</code><code class="perl plain">[3]-1 ];</code></div><div class="line number5 index4 alt2"><code class="perl spaces">           </code><code class="perl comments"># Hunk start   Hunk end</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Note that the hunks will always alternate between those that are part
+ of the LCS (those that contain unchanged items) and those that contain 
+changes. This means that all we need to be told is whether the first 
+hunk is a 'same' or 'diff' hunk and we can determine which of the other 
+hunks contain 'same' items or 'diff' items.</p>
+
+<p>By convention, we always make the first hunk contain unchanged items.
+ So the 1st, 3rd, 5th, etc. hunks (all odd-numbered hunks if you start 
+counting from 1) all contain unchanged items. And the 2nd, 4th, 6th, 
+etc. hunks (all even-numbered hunks if you start counting from 1) all 
+contain changed items.</p>
+
+<p>Since @a and @b don't begin with the same value, the first hunk in 
+our example is empty (otherwise we'd violate the above convention). Note
+ that the first 4 index values in our example are all zero. Plug these 
+values into our previous code block and we get:</p>
+
+<pre><div><div id="highlighter_660772" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl variable">@hunk1a</code> <code class="perl plain">= </code><code class="perl variable">@a</code><code class="perl plain">[ 0 .. 0-1 ];</code></div><div class="line number2 index1 alt1"><code class="perl variable">@hunk1b</code> <code class="perl plain">= </code><code class="perl variable">@b</code><code class="perl plain">[ 0 .. 0-1 ];</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>And <code>0..-1</code> returns the empty list.</p>
+
+<p>Move down one pair of indices (2..5) and we get the offset ranges for the second hunk, which contains changed items.</p>
+
+<p>Since <code>@diff[2..5]</code> contains (0,0,1,0) in our example, the second hunk consists of these two lists of items:</p>
+
+<pre><div><div id="highlighter_678720" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2">    <code class="perl variable">@hunk2a</code> <code class="perl plain">= </code><code class="perl variable">@a</code><code class="perl plain">[ </code><code class="perl variable">$cdiff</code><code class="perl plain">[2] .. </code><code class="perl variable">$cdiff</code><code class="perl plain">[4]-1 ];</code></div><div class="line number2 index1 alt1"><code class="perl spaces">    </code><code class="perl variable">@hunk2b</code> <code class="perl plain">= </code><code class="perl variable">@b</code><code class="perl plain">[ </code><code class="perl variable">$cdiff</code><code class="perl plain">[3] .. </code><code class="perl variable">$cdiff</code><code class="perl plain">[5]-1 ];</code></div><div class="line number3 index2 alt2"><code class="perl comments"># or</code></div><div class="line number4 index3 alt1"><code class="perl spaces">    </code><code class="perl variable">@hunk2a</code> <code class="perl plain">= </code><code class="perl variable">@a</code><code class="perl plain">[ 0 .. 1-1 ];</code></div><div class="line number5 index4 alt2"><code class="perl spaces">    </code><code class="perl variable">@hunk2b</code> <code class="perl plain">= </code><code class="perl variable">@b</code><code class="perl plain">[ 0 .. 0-1 ];</code></div><div class="line number6 index5 alt1"><code class="perl comments"># or</code></div><div class="line number7 index6 alt2"><code class="perl spaces">    </code><code class="perl variable">@hunk2a</code> <code class="perl plain">= </code><code class="perl variable">@a</code><code class="perl plain">[ 0 .. 0 ];</code></div><div class="line number8 index7 alt1"><code class="perl spaces">    </code><code class="perl variable">@hunk2b</code> <code class="perl plain">= </code><code class="perl variable">@b</code><code class="perl plain">[ 0 .. -1 ];</code></div><div class="line number9 index8 alt2"><code class="perl comments"># or</code></div><div class="line number10 index9 alt1"><code class="perl spaces">    </code><code class="perl variable">@hunk2a</code> <code class="perl plain">= ( </code><code class="perl string">'a'</code> <code class="perl plain">);</code></div><div class="line number11 index10 alt2"><code class="perl spaces">    </code><code class="perl variable">@hunk2b</code> <code class="perl plain">= ( );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>That is, we would delete item 0 ('a') from @a.</p>
+
+<p>Since <code>@diff[4..7]</code> contains (1,0,3,2) in our example, the third hunk consists of these two lists of items:</p>
+
+<pre><div><div id="highlighter_26130" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2">    <code class="perl variable">@hunk3a</code> <code class="perl plain">= </code><code class="perl variable">@a</code><code class="perl plain">[ </code><code class="perl variable">$cdiff</code><code class="perl plain">[4] .. </code><code class="perl variable">$cdiff</code><code class="perl plain">[6]-1 ];</code></div><div class="line number2 index1 alt1"><code class="perl spaces">    </code><code class="perl variable">@hunk3a</code> <code class="perl plain">= </code><code class="perl variable">@b</code><code class="perl plain">[ </code><code class="perl variable">$cdiff</code><code class="perl plain">[5] .. </code><code class="perl variable">$cdiff</code><code class="perl plain">[7]-1 ];</code></div><div class="line number3 index2 alt2"><code class="perl comments"># or</code></div><div class="line number4 index3 alt1"><code class="perl spaces">    </code><code class="perl variable">@hunk3a</code> <code class="perl plain">= </code><code class="perl variable">@a</code><code class="perl plain">[ 1 .. 3-1 ];</code></div><div class="line number5 index4 alt2"><code class="perl spaces">    </code><code class="perl variable">@hunk3a</code> <code class="perl plain">= </code><code class="perl variable">@b</code><code class="perl plain">[ 0 .. 2-1 ];</code></div><div class="line number6 index5 alt1"><code class="perl comments"># or</code></div><div class="line number7 index6 alt2"><code class="perl spaces">    </code><code class="perl variable">@hunk3a</code> <code class="perl plain">= </code><code class="perl variable">@a</code><code class="perl plain">[ 1 .. 2 ];</code></div><div class="line number8 index7 alt1"><code class="perl spaces">    </code><code class="perl variable">@hunk3a</code> <code class="perl plain">= </code><code class="perl variable">@b</code><code class="perl plain">[ 0 .. 1 ];</code></div><div class="line number9 index8 alt2"><code class="perl comments"># or</code></div><div class="line number10 index9 alt1"><code class="perl spaces">    </code><code class="perl variable">@hunk3a</code> <code class="perl plain">= </code><code class="perl string">qw( b c )</code><code class="perl plain">;</code></div><div class="line number11 index10 alt2"><code class="perl spaces">    </code><code class="perl variable">@hunk3a</code> <code class="perl plain">= </code><code class="perl string">qw( b c )</code><code class="perl plain">;</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Note that this third hunk contains unchanged items as our convention demands.</p>
+
+<p>You can continue this process until you reach the last two indices, 
+which will always be the number of items in each sequence. This is 
+required so that subtracting one from each will give you the indices to 
+the last items in each sequence.</p>
+
+<h2 id="traverse_sequences"><a href="#traverse_sequences" class="anchor"><span class="fa fa-bookmark black"></span></a><code>traverse_sequences</code></h2>
+
+<p><code>traverse_sequences</code> used to be the most general facility provided by this module (the new OO interface is more powerful and much easier to use).</p>
+
+<p>Imagine that there are two arrows. Arrow A points to an element of 
+sequence A, and arrow B points to an element of the sequence B. 
+Initially, the arrows point to the first elements of the respective 
+sequences. <code>traverse_sequences</code> will advance the arrows 
+through the sequences one element at a time, calling an appropriate 
+user-specified callback function before each advance. It will advance 
+the arrows in such a way that if there are equal elements <code>$A[$i]</code> and <code>$B[$j]</code> which are equal and which are part of the LCS, there will be some moment during the execution of <code>traverse_sequences</code> when arrow A is pointing to <code>$A[$i]</code> and arrow B is pointing to <code>$B[$j]</code>. When this happens, <code>traverse_sequences</code> will call the <code>MATCH</code> callback function and then it will advance both arrows.</p>
+
+<p>Otherwise, one of the arrows is pointing to an element of its sequence that is not part of the LCS. <code>traverse_sequences</code> will advance that arrow and will call the <code>DISCARD_A</code> or the <code>DISCARD_B</code> callback, depending on which arrow it advanced. If both arrows point to elements that are not part of the LCS, then <code>traverse_sequences</code> will advance one of them and call the appropriate callback, but it is not specified which it will call.</p>
+
+<p>The arguments to <code>traverse_sequences</code> are the two sequences to traverse, and a hash which specifies the callback functions, like this:</p>
+
+<pre><div><div id="highlighter_942253" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">traverse_sequences(</code></div><div class="line number2 index1 alt1"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code><code class="perl plain">,</code></div><div class="line number3 index2 alt2"><code class="perl spaces">    </code><code class="perl plain">{   </code><code class="perl string">MATCH</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_1</code><code class="perl plain">,</code></div><div class="line number4 index3 alt1"><code class="perl spaces">        </code><code class="perl string">DISCARD_A</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_2</code><code class="perl plain">,</code></div><div class="line number5 index4 alt2"><code class="perl spaces">        </code><code class="perl string">DISCARD_B</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_3</code><code class="perl plain">,</code></div><div class="line number6 index5 alt1"><code class="perl spaces">    </code><code class="perl plain">}</code></div><div class="line number7 index6 alt2"><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Callbacks for MATCH, DISCARD_A, and DISCARD_B are invoked with at 
+least the indices of the two arrows as their arguments. They are not 
+expected to return any values. If a callback is omitted from the table, 
+it is not called.</p>
+
+<p>Callbacks for A_FINISHED and B_FINISHED are invoked with at least the corresponding index in A or B.</p>
+
+<p>If arrow A reaches the end of its sequence, before arrow B does, <code>traverse_sequences</code> will call the <code>A_FINISHED</code> callback when it advances arrow B, if there is such a function; if not it will call <code>DISCARD_B</code> instead. Similarly if arrow B finishes first. <code>traverse_sequences</code>
+ returns when both arrows are at the ends of their respective sequences.
+ It returns true on success and false on failure. At present there is no
+ way to fail.</p>
+
+<p><code>traverse_sequences</code> may be passed an optional fourth parameter; this is a CODE reference to a key generation function. See <a href="#KEY-GENERATION-FUNCTIONS">"KEY GENERATION FUNCTIONS"</a>.</p>
+
+<p>Additional parameters, if any, will be passed to the key generation function.</p>
+
+<p>If you want to pass additional parameters to your callbacks, but 
+don't need a custom key generation function, you can get the default by 
+passing undef:</p>
+
+<pre><div><div id="highlighter_586308" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">traverse_sequences(</code></div><div class="line number2 index1 alt1"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code><code class="perl plain">,</code></div><div class="line number3 index2 alt2"><code class="perl spaces">    </code><code class="perl plain">{   </code><code class="perl string">MATCH</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_1</code><code class="perl plain">,</code></div><div class="line number4 index3 alt1"><code class="perl spaces">        </code><code class="perl string">DISCARD_A</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_2</code><code class="perl plain">,</code></div><div class="line number5 index4 alt2"><code class="perl spaces">        </code><code class="perl string">DISCARD_B</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_3</code><code class="perl plain">,</code></div><div class="line number6 index5 alt1"><code class="perl spaces">    </code><code class="perl plain">},</code></div><div class="line number7 index6 alt2"><code class="perl spaces">    </code><code class="perl functions">undef</code><code class="perl plain">,     </code><code class="perl comments"># default key-gen</code></div><div class="line number8 index7 alt1"><code class="perl spaces">    </code><code class="perl variable">$myArgument1</code><code class="perl plain">,</code></div><div class="line number9 index8 alt2"><code class="perl spaces">    </code><code class="perl variable">$myArgument2</code><code class="perl plain">,</code></div><div class="line number10 index9 alt1"><code class="perl spaces">    </code><code class="perl variable">$myArgument3</code><code class="perl plain">,</code></div><div class="line number11 index10 alt2"><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p><code>traverse_sequences</code> does not have a useful return value; you are expected to plug in the appropriate behavior with the callback functions.</p>
+
+<h2 id="traverse_balanced"><a href="#traverse_balanced" class="anchor"><span class="fa fa-bookmark black"></span></a><code>traverse_balanced</code></h2>
+
+<p><code>traverse_balanced</code> is an alternative to <code>traverse_sequences</code>.
+ It uses a different algorithm to iterate through the entries in the 
+computed LCS. Instead of sticking to one side and showing element 
+changes as insertions and deletions only, it will jump back and forth 
+between the two sequences and report <i>changes</i> occurring as deletions on one side followed immediately by an insertion on the other side.</p>
+
+<p>In addition to the <code>DISCARD_A</code>, <code>DISCARD_B</code>, and <code>MATCH</code> callbacks supported by <code>traverse_sequences</code>, <code>traverse_balanced</code> supports a <code>CHANGE</code> callback indicating that one element got <code>replaced</code> by another:</p>
+
+<pre><div><div id="highlighter_948518" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl plain">traverse_balanced(</code></div><div class="line number2 index1 alt1"><code class="perl spaces">    </code><code class="perl plain">\</code><code class="perl variable">@seq1</code><code class="perl plain">, \</code><code class="perl variable">@seq2</code><code class="perl plain">,</code></div><div class="line number3 index2 alt2"><code class="perl spaces">    </code><code class="perl plain">{   </code><code class="perl string">MATCH</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_1</code><code class="perl plain">,</code></div><div class="line number4 index3 alt1"><code class="perl spaces">        </code><code class="perl string">DISCARD_A</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_2</code><code class="perl plain">,</code></div><div class="line number5 index4 alt2"><code class="perl spaces">        </code><code class="perl string">DISCARD_B</code> <code class="perl plain">=&gt; </code><code class="perl variable">$callback_3</code><code class="perl plain">,</code></div><div class="line number6 index5 alt1"><code class="perl spaces">        </code><code class="perl string">CHANGE</code>    <code class="perl plain">=&gt; </code><code class="perl variable">$callback_4</code><code class="perl plain">,</code></div><div class="line number7 index6 alt2"><code class="perl spaces">    </code><code class="perl plain">}</code></div><div class="line number8 index7 alt1"><code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>If no <code>CHANGE</code> callback is specified, <code>traverse_balanced</code> will map <code>CHANGE</code> events to <code>DISCARD_A</code> and <code>DISCARD_B</code> actions, therefore resulting in a similar behaviour as <code>traverse_sequences</code> with different order of events.</p>
+
+<p><code>traverse_balanced</code> might be a bit slower than <code>traverse_sequences</code>, noticeable only while processing huge amounts of data.</p>
+
+<p>The <code>sdiff</code> function of this module is implemented as call to <code>traverse_balanced</code>.</p>
+
+<p><code>traverse_balanced</code> does not have a useful return value; you are expected to plug in the appropriate behavior with the callback functions.</p>
+
+<h1 id="KEY-GENERATION-FUNCTIONS"><a href="#KEY-GENERATION-FUNCTIONS" class="anchor"><span class="fa fa-bookmark black"></span></a><a id="KEY"></a>KEY GENERATION FUNCTIONS</h1>
+
+<p>Most of the functions accept an optional extra parameter. This is a 
+CODE reference to a key generating (hashing) function that should return
+ a string that uniquely identifies a given element. It should be the 
+case that if two elements are to be considered equal, their keys should 
+be the same (and the other way around). If no key generation function is
+ provided, the key will be the element as a string.</p>
+
+<p>By default, comparisons will use "eq" and elements will be turned into keys using the default stringizing operator '""'.</p>
+
+<p>Where this is important is when you're comparing something other than
+ strings. If it is the case that you have multiple different objects 
+that should be considered to be equal, you should supply a key 
+generation function. Otherwise, you have to make sure that your arrays 
+contain unique references.</p>
+
+<p>For instance, consider this example:</p>
+
+<pre><div><div id="highlighter_363347" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl keyword">package</code> <code class="perl plain"><a href="https://metacpan.org/pod/Person">Person</a>;</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="perl keyword">sub</code> <code class="perl plain">new</code></div><div class="line number4 index3 alt1"><code class="perl plain">{</code></div><div class="line number5 index4 alt2"><code class="perl spaces">    </code><code class="perl keyword">my</code> <code class="perl variable">$package</code> <code class="perl plain">= </code><code class="perl functions">shift</code><code class="perl plain">;</code></div><div class="line number6 index5 alt1"><code class="perl spaces">    </code><code class="perl keyword">return</code> <code class="perl keyword">bless</code> <code class="perl plain">{ </code><code class="perl string">name</code> <code class="perl plain">=&gt; </code><code class="perl string">''</code><code class="perl plain">, </code><code class="perl string">ssn</code> <code class="perl plain">=&gt; </code><code class="perl string">''</code><code class="perl plain">, </code><code class="perl variable">@_</code> <code class="perl plain">}, </code><code class="perl variable">$package</code><code class="perl plain">;</code></div><div class="line number7 index6 alt2"><code class="perl plain">}</code></div><div class="line number8 index7 alt1"> </div><div class="line number9 index8 alt2"><code class="perl keyword">sub</code> <code class="perl plain">clone</code></div><div class="line number10 index9 alt1"><code class="perl plain">{</code></div><div class="line number11 index10 alt2"><code class="perl spaces">    </code><code class="perl keyword">my</code> <code class="perl variable">$old</code> <code class="perl plain">= </code><code class="perl functions">shift</code><code class="perl plain">;</code></div><div class="line number12 index11 alt1"><code class="perl spaces">    </code><code class="perl keyword">my</code> <code class="perl variable">$new</code> <code class="perl plain">= </code><code class="perl keyword">bless</code> <code class="perl plain">{ </code><code class="perl variable">%$old</code> <code class="perl plain">}, </code><code class="perl keyword">ref</code><code class="perl plain">(</code><code class="perl variable">$old</code><code class="perl plain">);</code></div><div class="line number13 index12 alt2"><code class="perl plain">}</code></div><div class="line number14 index13 alt1"> </div><div class="line number15 index14 alt2"><code class="perl keyword">sub</code> <code class="perl plain">hash</code></div><div class="line number16 index15 alt1"><code class="perl plain">{</code></div><div class="line number17 index16 alt2"><code class="perl spaces">    </code><code class="perl keyword">return</code> <code class="perl functions">shift</code><code class="perl plain">()-&gt;{</code><code class="perl string">'ssn'</code><code class="perl plain">};</code></div><div class="line number18 index17 alt1"><code class="perl plain">}</code></div><div class="line number19 index18 alt2"> </div><div class="line number20 index19 alt1"><code class="perl keyword">my</code> <code class="perl variable">$person1</code> <code class="perl plain">= Person-&gt;new( </code><code class="perl string">name</code> <code class="perl plain">=&gt; </code><code class="perl string">'Joe'</code><code class="perl plain">, </code><code class="perl string">ssn</code> <code class="perl plain">=&gt; </code><code class="perl string">'123-45-6789'</code> <code class="perl plain">);</code></div><div class="line number21 index20 alt2"><code class="perl keyword">my</code> <code class="perl variable">$person2</code> <code class="perl plain">= Person-&gt;new( </code><code class="perl string">name</code> <code class="perl plain">=&gt; </code><code class="perl string">'Mary'</code><code class="perl plain">, </code><code class="perl string">ssn</code> <code class="perl plain">=&gt; </code><code class="perl string">'123-47-0000'</code> <code class="perl plain">);</code></div><div class="line number22 index21 alt1"><code class="perl keyword">my</code> <code class="perl variable">$person3</code> <code class="perl plain">= Person-&gt;new( </code><code class="perl string">name</code> <code class="perl plain">=&gt; </code><code class="perl string">'Pete'</code><code class="perl plain">, </code><code class="perl string">ssn</code> <code class="perl plain">=&gt; </code><code class="perl string">'999-45-2222'</code> <code class="perl plain">);</code></div><div class="line number23 index22 alt2"><code class="perl keyword">my</code> <code class="perl variable">$person4</code> <code class="perl plain">= Person-&gt;new( </code><code class="perl string">name</code> <code class="perl plain">=&gt; </code><code class="perl string">'Peggy'</code><code class="perl plain">, </code><code class="perl string">ssn</code> <code class="perl plain">=&gt; </code><code class="perl string">'123-45-9999'</code> <code class="perl plain">);</code></div><div class="line number24 index23 alt1"><code class="perl keyword">my</code> <code class="perl variable">$person5</code> <code class="perl plain">= Person-&gt;new( </code><code class="perl string">name</code> <code class="perl plain">=&gt; </code><code class="perl string">'Frank'</code><code class="perl plain">, </code><code class="perl string">ssn</code> <code class="perl plain">=&gt; </code><code class="perl string">'000-45-9999'</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>If you did this:</p>
+
+<pre><div><div id="highlighter_992563" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl keyword">my</code> <code class="perl variable">$array1</code> <code class="perl plain">= [ </code><code class="perl variable">$person1</code><code class="perl plain">, </code><code class="perl variable">$person2</code><code class="perl plain">, </code><code class="perl variable">$person4</code> <code class="perl plain">];</code></div><div class="line number2 index1 alt1"><code class="perl keyword">my</code> <code class="perl variable">$array2</code> <code class="perl plain">= [ </code><code class="perl variable">$person1</code><code class="perl plain">, </code><code class="perl variable">$person3</code><code class="perl plain">, </code><code class="perl variable">$person4</code><code class="perl plain">, </code><code class="perl variable">$person5</code> <code class="perl plain">];</code></div><div class="line number3 index2 alt2"><code class="perl plain">Algorithm::Diff::diff( </code><code class="perl variable">$array1</code><code class="perl plain">, </code><code class="perl variable">$array2</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>everything would work out OK (each of the objects would be converted 
+into a string like "Person=HASH(0x82425b0)" for comparison).</p>
+
+<p>But if you did this:</p>
+
+<pre><div><div id="highlighter_11327" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl keyword">my</code> <code class="perl variable">$array1</code> <code class="perl plain">= [ </code><code class="perl variable">$person1</code><code class="perl plain">, </code><code class="perl variable">$person2</code><code class="perl plain">, </code><code class="perl variable">$person4</code> <code class="perl plain">];</code></div><div class="line number2 index1 alt1"><code class="perl keyword">my</code> <code class="perl variable">$array2</code> <code class="perl plain">= [ </code><code class="perl variable">$person1</code><code class="perl plain">, </code><code class="perl variable">$person3</code><code class="perl plain">, </code><code class="perl variable">$person4</code><code class="perl plain">-&gt;clone(), </code><code class="perl variable">$person5</code> <code class="perl plain">];</code></div><div class="line number3 index2 alt2"><code class="perl plain">Algorithm::Diff::diff( </code><code class="perl variable">$array1</code><code class="perl plain">, </code><code class="perl variable">$array2</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>$person4 and $person4-&gt;clone() (which have the same name and SSN) 
+would be seen as different objects. If you wanted them to be considered 
+equivalent, you would have to pass in a key generation function:</p>
+
+<pre><div><div id="highlighter_801579" class="syntaxhighlighter nogutter  perl"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="perl keyword">my</code> <code class="perl variable">$array1</code> <code class="perl plain">= [ </code><code class="perl variable">$person1</code><code class="perl plain">, </code><code class="perl variable">$person2</code><code class="perl plain">, </code><code class="perl variable">$person4</code> <code class="perl plain">];</code></div><div class="line number2 index1 alt1"><code class="perl keyword">my</code> <code class="perl variable">$array2</code> <code class="perl plain">= [ </code><code class="perl variable">$person1</code><code class="perl plain">, </code><code class="perl variable">$person3</code><code class="perl plain">, </code><code class="perl variable">$person4</code><code class="perl plain">-&gt;clone(), </code><code class="perl variable">$person5</code> <code class="perl plain">];</code></div><div class="line number3 index2 alt2"><code class="perl plain">Algorithm::Diff::diff( </code><code class="perl variable">$array1</code><code class="perl plain">, </code><code class="perl variable">$array2</code><code class="perl plain">, \</code><code class="perl variable">&amp;Person::hash</code> <code class="perl plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>This would use the 'ssn' field in each Person as a comparison key, 
+and so would consider $person4 and $person4-&gt;clone() as equal.</p>
+
+<p>You may also pass additional parameters to the key generation function if you wish.</p>
+
+<h1 id="ERROR-CHECKING"><a href="#ERROR-CHECKING" class="anchor"><span class="fa fa-bookmark black"></span></a><a id="ERROR"></a>ERROR CHECKING</h1>
+
+<p>If you pass these routines a non-reference and they expect a reference, they will die with a message.</p>
+
+<h1 id="AUTHOR"><a href="#AUTHOR" class="anchor"><span class="fa fa-bookmark black"></span></a>AUTHOR</h1>
+
+<p>This version released by Tye McQueen (http://perlmonks.org/?node=tye).</p>
+
+<h1 id="LICENSE"><a href="#LICENSE" class="anchor"><span class="fa fa-bookmark black"></span></a>LICENSE</h1>
+
+<p>Parts Copyright (c) 2000-2004 Ned Konz. All rights reserved. Parts by Tye McQueen.</p>
+
+<p>This program is free software; you can redistribute it and/or modify it under the same terms as Perl.</p>
+
+<h1 id="MAILING-LIST"><a href="#MAILING-LIST" class="anchor"><span class="fa fa-bookmark black"></span></a><a id="MAILING"></a>MAILING LIST</h1>
+
+<p>Mark-Jason still maintains a mailing list. To join a low-volume 
+mailing list for announcements related to diff and Algorithm::Diff, send
+ an empty mail message to mjd-perl-diff-request@plover.com.</p>
+
+<h1 id="CREDITS"><a href="#CREDITS" class="anchor"><span class="fa fa-bookmark black"></span></a>CREDITS</h1>
+
+<p>Versions through 0.59 (and much of this documentation) were written by:</p>
+
+<p>Mark-Jason Dominus</p>
+
+<p>This version borrows some documentation and routine names from Mark-Jason's, but Diff.pm's code was completely replaced.</p>
+
+<p>This code was adapted from the Smalltalk code of Mario Wolczko 
+&lt;mario@wolczko.com&gt;, which is available at 
+ftp://st.cs.uiuc.edu/pub/Smalltalk/MANCHESTER/manchester/4.0/diff.st</p>
+
+<p><code>sdiff</code> and <code>traverse_balanced</code> were written by Mike Schilli &lt;m@perlmeister.com&gt;.</p>
+
+<p>The algorithm is that described in <i>A Fast Algorithm for Computing Longest Common Subsequences</i>, CACM, vol.20, no.5, pp.350-353, May 1977, with a few minor improvements to improve the speed.</p>
+
+<p>Much work was done by Ned Konz (perl@bike-nomad.com).</p>
+
+<p>The OO interface and some other changes are by Tye McQueen.</p></div>
+
+<div id="metacpan_install-instructions-dialog" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Module Install Instructions</h4>
+      </div>
+      <div class="modal-body">
+        <p>To install Algorithm::Diff, copy and paste the appropriate command in to your terminal.</p>
+        <p><a href="https://metacpan.org/dist/App-cpanminus/view/bin/cpanm">cpanm</a></p>
+        <pre><code>cpanm Algorithm::Diff</code></pre>
+        <p><a href="https://metacpan.org/pod/CPAN">CPAN shell</a></p>
+        <pre><code>perl -MCPAN -e shell
+install Algorithm::Diff</code></pre>
+        <p>For more information on module installation, please visit <a href="https://www.cpan.org/modules/INSTALL.html">the detailed CPAN module installation guide</a>.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn">Close</a>
+      </div>
+    </div>
+  </div>
+</div>
+          </main>
+          <div class="content-pagination">
+          </div>
+        </div>
+        <footer class="footer">
+          <div class="footer-container">
+            <div class="footer-social">
+              <div class="footer-link footer-logo">
+                <a href="https://metacpan.org/">
+                  <img src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/metacpan-logo.svg" alt="MetaCPAN">
+                </a>
+              </div>
+              <a class="footer-social-link" href="https://github.com/metacpan">
+                <i class="fab fa-github-square"></i>
+              </a>
+              <a class="footer-social-link" href="https://twitter.com/metacpan">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </div>
+            <div class="footer-links">
+              <div class="footer-link">
+                  <a href="https://metacpan.org/about">About</a>
+              </div>
+              <div class="footer-link">
+                  <a href="https://metacpan.org/about/sponsors">Sponsor</a>
+              </div>
+              <div class="footer-link">
+                  <a href="https://grep.metacpan.org/">grep::cpan</a>
+              </div>
+              <div class="footer-link">
+                  <a href="https://metacpan.org/recent">Recent</a>
+              </div>
+              <div class="footer-link">
+                  <a href="https://metacpan.org/pod/about/faq">FAQ</a>
+              </div>
+              <div class="footer-link">
+                  <a href="https://metacpan.org/tools">Tools</a>
+              </div>
+              <div class="footer-link">
+                  <a href="https://fastapi.metacpan.org/">API</a>
+              </div>
+              <div class="footer-link">
+                  <a href="https://www.perl.org/">Perl.org</a>
+              </div>
+            </div>
+            <div class="footer-sponsors">
+              <a class="footer-sponsor-link" target="_blank" href="https://www.bytemark.co.uk/" rel="noopener">
+                <img class="footer-sponsor-bytemark" src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/bytemark_logo.svg" alt="Bytemark logo">
+              </a>
+              <a class="footer-sponsor-link" target="_blank" href="https://www.liquidweb.com/" rel="noopener">
+                <img class="footer-sponsor-liquidweb" src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/liquidweb_logo.png" alt="liquidweb logo">
+              </a>
+              <a class="footer-sponsor-link" target="_blank" href="https://deriv.com/careers/" rel="noopener">
+                <img class="footer-sponsor-deriv" src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/deriv-horizontal-web-dark-100-removebg.png" alt="Deriv logo">
+              </a>
+              <a class="footer-sponsor-link" target="_blank" href="https://geocode.xyz/" rel="noopener">
+                <img class="footer-sponsor-geocode" src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/geocodelogo.svg" alt="Geocode logo">
+              </a>
+              <a class="footer-sponsor-link" target="_blank" href="https://www.fastly.com/" rel="noopener">
+                <img class="footer-sponsor-fastly" src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/fastly_logo.svg" alt="Fastly logo">
+              </a>
+              <a class="footer-sponsor-link" target="_blank" href="https://opencagedata.com/" rel="noopener">
+                <img class="footer-sponsor-opencage" src="Algorithm%20Diff%20-%20Compute%20%60intelligent'%20differences%20between%20two%20files%20_%20lists%20-%20metacpan.org_files/open-cage.svg" alt="OpenCage logo">
+              </a>
+            </div>
+          </div>
+        </footer>
+        <div class="modal fade" tabindex="-1" role="dialog" id="metacpan_keyboard-shortcuts">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Keyboard Shortcuts</h4>
+              </div>
+              <div class="modal-body row">
+<div class="col-md-6">
+  <table class="table keyboard-shortcuts">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Global</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="keys">
+          <kbd>s</kbd>
+        </td>
+        <td>Focus search bar</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>?</kbd>
+        </td>
+        <td>Bring up this help dialog</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table keyboard-shortcuts">
+    <thead>
+      <tr>
+        <th></th>
+        <th>GitHub</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>p</kbd>
+        </td>
+        <td>Go to pull requests</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>i</kbd>
+        </td>
+        <td>go to github issues (only if github is preferred repository)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-6">
+  <table class="table keyboard-shortcuts">
+    <thead>
+      <tr>
+        <th></th>
+        <th>POD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>a</kbd>
+        </td>
+        <td>Go to author</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>c</kbd>
+        </td>
+        <td>Go to changes</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>i</kbd>
+        </td>
+        <td>Go to issues</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>d</kbd>
+        </td>
+        <td>Go to dist</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>r</kbd>
+        </td>
+        <td>Go to repository/SCM</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>s</kbd>
+        </td>
+        <td>Go to source</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>b</kbd>
+        </td>
+        <td>Go to file browse</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-12">
+  <table class="table keyboard-shortcuts">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Search terms</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>module:</em> (e.g. <a href="https://metacpan.org/search?q=module%3APlugin">module:Plugin</a>)</td>
+      </tr>
+      <tr>
+        <td><em>distribution:</em> (e.g. <a href="https://metacpan.org/search?q=distribution%3ADancer+auth">distribution:Dancer auth</a>)</td>
+      </tr>
+      <tr>
+        <td><em>author:</em> (e.g. <a href="https://metacpan.org/search?q=author%3ASONGMU+Redis">author:SONGMU Redis</a>)</td>
+      </tr>
+      <tr>
+        <td><em>version:</em> (e.g. <a href="https://metacpan.org/search?q=version%3A1.00">version:1.00</a>)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+              </div>
+              <div class="modal-footer"></div>
+            </div>
+          </div>
+        </div>
+    
+
+<div class="autocomplete-suggestions" style="position: absolute; display: none; width: 358.183px; max-height: 180px; z-index: 9999;"></div></body></html>
